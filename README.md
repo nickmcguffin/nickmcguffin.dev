@@ -14,7 +14,7 @@ A static Astro site. No server, no database, no adapter: `astro build` emits pla
 
 ## Run it
 
-Node `>=22.12.0`, npm.
+Node — `.nvmrc` pins 24, matching CI; `engines` sets the floor at `>=22.12.0`. npm.
 
 ```sh
 npm install
@@ -137,6 +137,11 @@ The `nickmcguffin.dev` custom domain is configured in the **repo's GitHub Pages 
 a `CNAME` file in `public/`. Worth knowing before wondering why the domain isn't in the codebase.
 
 ## SEO
+
+The feed at `/rss.xml` carries **full post bodies**, not just descriptions. MDX compiles to a
+component rather than static HTML, so `rss.xml.ts` renders each post through Astro's container API
+and passes the result through `sanitize-html`, which also rewrites relative links and images to
+absolute URLs — feed readers resolve nothing themselves.
 
 `site` in `astro.config.ts` is the root of all absolute URLs — canonical tags, the sitemap, and RSS
 links all derive from it, so changing the domain is a one-line change. `public/robots.txt` points
