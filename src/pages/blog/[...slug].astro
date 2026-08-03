@@ -93,12 +93,11 @@ const label = 'font-mono text-[11px] uppercase tracking-[0.12em]';
 			</div>
 		</article>
 	</div>
+    <script>
+        // Collapse the mobile contents once a link is followed
+        const toc = document.getElementById('toc-mobile') as HTMLDetailsElement | null;
+        toc?.addEventListener('click', (event) => {
+            if ((event.target as HTMLElement).closest('a')) toc.open = false;
+        });
+    </script>
 </Base>
-
-<script>
-	// Collapse the mobile contents once a link is followed
-	const toc = document.getElementById('toc-mobile') as HTMLDetailsElement | null;
-	toc?.addEventListener('click', (event) => {
-		if ((event.target as HTMLElement).closest('a')) toc.open = false;
-	});
-</script>
