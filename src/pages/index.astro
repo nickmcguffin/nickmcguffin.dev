@@ -1,13 +1,11 @@
 ---
-import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import RouteGraphic from '../components/RouteGraphic.astro';
 import PostRow from '../components/PostRow.astro';
+import { getPosts } from '../lib/posts';
 
 // Latest 3 blog posts.
-const posts = (await getCollection('blog'))
-	.sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf())
-	.slice(0, 3);
+const posts = (await getPosts()).slice(0, 3);
  
 const label = 'font-mono text-[11px] uppercase tracking-[0.12em]';
 ---

@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import readingTime from 'reading-time';
+import { getReadingMinutes } from '../lib/posts';
 
 interface Props {
 	post: CollectionEntry<'blog'>;
@@ -9,7 +9,7 @@ interface Props {
 const { post } = Astro.props;
 const { title, description, published } = post.data;
 
-const minutes = post.body ? Math.max(1, Math.round(readingTime(post.body).minutes)) : null;
+const minutes = getReadingMinutes(post);
 ---
 
 <a href={`/blog/${post.id}`} class="group flex flex-col gap-1 py-7 sm:flex-row sm:gap-6">

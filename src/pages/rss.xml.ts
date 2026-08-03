@@ -1,10 +1,9 @@
 import rss from "@astrojs/rss";
-import { getCollection } from "astro:content";
 import type { APIContext } from "astro";
+import { getPosts } from "../lib/posts";
 
 export async function GET(context: APIContext) {
-  const posts = await getCollection("blog");
-  posts.sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf());
+  const posts = await getPosts();
 
   return rss({
     title: "Nick McGuffin",

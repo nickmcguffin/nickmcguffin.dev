@@ -1,10 +1,9 @@
 ---
-import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import PostRow from '../../components/PostRow.astro';
+import { getPosts } from '../../lib/posts';
 
-const posts = await getCollection('blog');
-posts.sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf());
+const posts = await getPosts();
 
 const deck = 'Notes on what I build, and the parts that break.';
 ---
