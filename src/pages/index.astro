@@ -7,13 +7,12 @@ import { getPosts } from '../lib/posts';
 // Latest 3 blog posts.
 const posts = (await getPosts()).slice(0, 3);
  
-const label = 'font-mono text-[11px] uppercase tracking-[0.12em]';
 ---
  
 <Base>
 	<section class="flex flex-col-reverse items-start gap-10 sm:flex-row sm:items-end sm:justify-between">
 		<div class="max-w-xl">
-			<p class:list={[label, 'text-muted']}>Full-stack engineer &nbsp;·&nbsp; North Queensland, Australia</p>
+			<p class:list={['label', 'text-muted']}>Full-stack engineer &nbsp;·&nbsp; North Queensland, Australia</p>
  
 			<h1
 				class="mt-5 font-display text-4xl font-extrabold leading-[0.97] tracking-[-0.035em] sm:text-5xl lg:text-6xl"
@@ -33,11 +32,11 @@ const label = 'font-mono text-[11px] uppercase tracking-[0.12em]';
 	<section class="mt-12">
 		<div class="flex items-baseline justify-between border-b border-rule pb-3">
 			<div class="flex items-baseline gap-3">
-				<span class:list={[label, 'text-accent']}>01</span>
-				<span class:list={[label, 'text-muted']}>Recent writing</span>
+				<span class:list={['label', 'text-accent']}>01</span>
+				<span class:list={['label', 'text-muted']}>Recent writing</span>
 			</div>
  
-			<a href="/blog" class:list={[label, 'text-muted hover:text-fg']}>All writing &rarr;</a>
+			<a href="/blog" class:list={['label', 'text-muted hover:text-fg']}>All writing &rarr;</a>
 		</div>
  
 		<ul class="divide-y divide-rule">

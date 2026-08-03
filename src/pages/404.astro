@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+
+const description = "That page doesn't exist.";
+---
+
+<Base title="404" description={description}>
+	<section class="max-w-xl py-10 sm:py-16">
+		<p class="label text-accent">Error 404</p>
+
+		<h1
+			class="mt-5 font-display text-4xl font-extrabold leading-[0.97] tracking-[-0.035em] sm:text-5xl"
+		>
+			This page doesn't exist.
+		</h1>
+
+		<p class="mt-4 leading-relaxed text-muted">
+			The link may be broken, or the page may have moved. Nothing here is deleted often, so a typo
+			in the URL is the likelier culprit.
+		</p>
+
+		<div class="mt-8 flex gap-5">
+			<a href="/" class="label text-muted hover:text-fg">&larr; Home</a>
+			<a href="/blog" class="label text-muted hover:text-fg">All writing</a>
+		</div>
+	</section>
+</Base>

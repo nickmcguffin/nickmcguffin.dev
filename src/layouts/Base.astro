@@ -27,7 +27,6 @@ const links = [
 const path = Astro.url.pathname;
 const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`);
 
-const label = 'font-mono text-[11px] uppercase tracking-[0.12em]';
 ---
 
 <html lang="en">
@@ -71,7 +70,7 @@ const label = 'font-mono text-[11px] uppercase tracking-[0.12em]';
 		<a
 			href="#main"
 			class:list={[
-				label,
+				'label',
 				'sr-only focus:not-sr-only focus:absolute focus:left-5 focus:top-4 focus:z-50',
 				'focus:rounded-full focus:border focus:border-rule focus:bg-bg focus:px-4 focus:py-2 focus:text-fg',
 			]}
@@ -95,7 +94,7 @@ const label = 'font-mono text-[11px] uppercase tracking-[0.12em]';
 							<a
 								href={link.href}
 								aria-current={isCurrent(link.href) ? 'page' : undefined}
-								class:list={[label, 'hover:text-fg', isCurrent(link.href) ? 'text-accent' : 'text-muted']}
+								class:list={['label', 'hover:text-fg', isCurrent(link.href) ? 'text-accent' : 'text-muted']}
 							>
 								{link.label}
 							</a>
@@ -107,7 +106,7 @@ const label = 'font-mono text-[11px] uppercase tracking-[0.12em]';
 					id="theme-toggle"
 					type="button"
 					aria-label="Toggle colour theme"
-					class:list={[label, 'rounded-full border border-rule px-3 py-1 text-muted hover:text-fg']}
+					class:list={['label', 'rounded-full border border-rule px-3 py-1 text-muted hover:text-fg']}
 				>
 					<span class="dark:hidden">Dark</span>
 					<span class="hidden dark:inline">Light</span>
@@ -119,7 +118,7 @@ const label = 'font-mono text-[11px] uppercase tracking-[0.12em]';
 			</main>
 
 			<footer
-				class:list={[label, 'flex gap-5 border-t border-rule py-6 text-muted']}
+				class:list={['label', 'flex gap-5 border-t border-rule py-6 text-muted']}
 			>
 				<span class="mr-auto">© {new Date().getFullYear()} Nick McGuffin</span>
 				<a href="/rss.xml" class="hover:text-fg">RSS</a>

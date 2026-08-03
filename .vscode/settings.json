@@ -1,0 +1,6 @@
+{
+  // Tailwind v4 at-rules (@theme, @utility, @custom-variant) aren't known to
+  // VS Code's built-in CSS linter. The Tailwind IntelliSense extension
+  // understands them; this stops the stock linter flagging them meanwhile.
+  "css.lint.unknownAtRules": "ignore"
+}

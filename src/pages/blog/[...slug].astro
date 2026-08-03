@@ -19,7 +19,6 @@ const { title, description, published } = post.data;
 const minutes = getReadingMinutes(post);
 const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
 
-const label = 'font-mono text-[11px] uppercase tracking-[0.12em]';
 ---
 
 <Base title={title} description={description} published={published}>
@@ -28,7 +27,7 @@ const label = 'font-mono text-[11px] uppercase tracking-[0.12em]';
 			toc.length > 0 && (
 				<aside class="hidden w-52 shrink-0 lg:block">
 					<nav class="sticky top-10 self-start" aria-labelledby="toc-label">
-						<p id="toc-label" class:list={[label, 'text-muted']}>
+						<p id="toc-label" class:list={['label', 'text-muted']}>
 							Contents
 						</p>
 						<div class="mt-4">
@@ -40,7 +39,7 @@ const label = 'font-mono text-[11px] uppercase tracking-[0.12em]';
 		}
 
 		<article class="min-w-0 max-w-[62ch]">
-			<a href="/blog" class:list={[label, 'text-muted hover:text-fg']}>&larr; All writing</a>
+			<a href="/blog" class:list={['label', 'text-muted hover:text-fg']}>&larr; All writing</a>
 
 			<h1
 				class="mt-7 font-display text-3xl font-extrabold leading-[1.05] tracking-[-0.03em] sm:text-4xl"
@@ -48,7 +47,7 @@ const label = 'font-mono text-[11px] uppercase tracking-[0.12em]';
 				{title}
 			</h1>
 
-			<div class:list={[label, 'mt-5 flex flex-wrap gap-x-5 gap-y-1 text-muted']}>
+			<div class:list={['label', 'mt-5 flex flex-wrap gap-x-5 gap-y-1 text-muted']}>
 				<time datetime={published.toISOString()}>
 					{published.toLocaleDateString('en-AU', { timeZone: 'UTC', dateStyle: 'long' })}
 				</time>
@@ -60,7 +59,7 @@ const label = 'font-mono text-[11px] uppercase tracking-[0.12em]';
 					<details id="toc-mobile" class="group mt-8 border-y border-rule lg:hidden">
 						<summary
 							class:list={[
-								label,
+								'label',
 								'flex cursor-pointer list-none items-center justify-between py-4 text-muted [&::-webkit-details-marker]:hidden',
 							]}
 						>

@@ -46,6 +46,15 @@
   --font-mono: "IBM Plex Mono", monospace;
 }
 
+/* Small mono caps — eyebrows, dates, nav, footer. Used often enough
+   that it's a utility rather than a repeated class string. */
+@utility label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
 /* ---- Post body ------------------------------------------------
    Styles rendered MDX. Preflight strips every default, so each
    element needs an explicit rule.

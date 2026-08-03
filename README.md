@@ -74,6 +74,10 @@ without it Tailwind resolves each var to a literal at build time and the runtime
 working. `--code-bg` is deliberately not in that block; it's only consumed by the `.post` rules, so
 there's no `bg-code-bg` utility.
 
+**`label`** is a custom utility (`@utility label`) for the small mono caps used by eyebrows, dates,
+nav, and the footer. It exists because that class string was previously copy-pasted into four
+files; if you need another recurring cluster like it, add a utility rather than a fifth copy.
+
 **Dark mode** is class-based (`@custom-variant dark`), driven by `.dark` on `<html>`. The toggle in
 `src/layouts/Base.astro` writes the choice to `localStorage`; a small inline script in `<head>`
 applies it before first paint, falling back to `prefers-color-scheme`. It has to stay inline and
