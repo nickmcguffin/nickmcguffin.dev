@@ -1,0 +1,40 @@
+@import "tailwindcss";
+ 
+/* Class-based dark mode. Applies when <html> has .dark */
+@custom-variant dark (&:where(.dark, .dark *));
+ 
+/* ---- Palettes -------------------------------------------------
+   Raw values only based on role. These can be used for both
+   colour modes.
+---------------------------------------------------------------- */
+ 
+:root {
+  --bg: #f5f4f0;      /* warm paper */
+  --fg: #12100e;      /* ink */
+  --muted: #6e7370;   /* secondary text */
+  --rule: #dedcd3;    /* hairlines, borders */
+  --accent: #8a5a12;  /* brass, darkened for contrast on light */
+  color-scheme: light;
+}
+ 
+.dark {
+  --bg: #0f1413;      /* near-black, green undertone */
+  --fg: #e9e7e0;
+  --muted: #8a9491;
+  --rule: #26302e;
+  --accent: #d4a03c;  /* brass */
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-accent: var(--accent);
+ 
+  --font-display: "Archivo Variable", sans-serif;
+  --font-sans: "IBM Plex Sans", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+ 
