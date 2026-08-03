@@ -1,25 +1,104 @@
 ---
 import { getCollection, render } from 'astro:content';
+import readingTime from 'reading-time';
 import Base from '../../layouts/Base.astro';
+import TableOfContents from '../../components/TableOfContents.astro';
 
 export async function getStaticPaths() {
-    const posts = await getCollection('blog');
-    return posts.map((post) => ({
-        params: { slug: post.id },
-        props: { post }
-    }))
+	const posts = await getCollection('blog');
+	return posts.map((post) => ({
+		params: { slug: post.id },
+		props: { post },
+	}));
 }
 
 const { post } = Astro.props;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
+const { title, description, published } = post.data;
+
+const minutes = post.body ? Math.max(1, Math.round(readingTime(post.body).minutes)) : null;
+const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
+
+const label = 'font-mono text-[11px] uppercase tracking-[0.12em]';
 ---
 
-<Base title={post.data.title} description={post.data.description}>
-    <article>
-        <h1>{post.data.title}</h1>
-        <time datetime={post.data.published.toISOString()}>
-            Published on {post.data.published.toLocaleDateString('en-AU', { timeZone: 'UTC', dateStyle: 'medium' })}
-        </time>
-        <Content />
-    </article>
+<Base title={title} description={description}>
+	<div class="flex gap-14">
+		{
+			toc.length > 0 && (
+				<aside class="hidden w-52 shrink-0 lg:block">
+					<nav class="sticky top-10 self-start" aria-labelledby="toc-label">
+						<p id="toc-label" class:list={[label, 'text-muted']}>
+							Contents
+						</p>
+						<div class="mt-4">
+							<TableOfContents headings={toc} />
+						</div>
+					</nav>
+				</aside>
+			)
+		}
+
+		<article class="min-w-0 max-w-[62ch]">
+			<a href="/blog" class:list={[label, 'text-muted hover:text-fg']}>&larr; All writing</a>
+
+			<h1
+				class="mt-7 font-display text-3xl font-extrabold leading-[1.05] tracking-[-0.03em] sm:text-4xl"
+			>
+				{title}
+			</h1>
+
+			<div class:list={[label, 'mt-5 flex flex-wrap gap-x-5 gap-y-1 text-muted']}>
+				<time datetime={published.toISOString()}>
+					{published.toLocaleDateString('en-AU', { timeZone: 'UTC', dateStyle: 'long' })}
+				</time>
+				{minutes && <span>{minutes} min read</span>}
+			</div>
+
+			{
+				toc.length > 0 && (
+					<details id="toc-mobile" class="group mt-8 border-y border-rule lg:hidden">
+						<summary
+							class:list={[
+								label,
+								'flex cursor-pointer list-none items-center justify-between py-4 text-muted [&::-webkit-details-marker]:hidden',
+							]}
+						>
+							Contents
+							<svg
+								viewBox="0 0 12 12"
+								width="12"
+								height="12"
+								aria-hidden="true"
+								class="transition-transform group-open:rotate-180"
+							>
+								<path
+									d="M2 4.5 L6 8.5 L10 4.5"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="1.5"
+									stroke-linecap="round"
+								/>
+							</svg>
+						</summary>
+						<div class="pb-4">
+							<TableOfContents headings={toc} />
+						</div>
+					</details>
+				)
+			}
+
+			<div class="post mt-10 border-t border-rule pt-10 lg:mt-10">
+				<Content />
+			</div>
+		</article>
+	</div>
 </Base>
+
+<script>
+	// Collapse the mobile contents once a link is followed
+	const toc = document.getElementById('toc-mobile') as HTMLDetailsElement | null;
+	toc?.addEventListener('click', (event) => {
+		if ((event.target as HTMLElement).closest('a')) toc.open = false;
+	});
+</script>

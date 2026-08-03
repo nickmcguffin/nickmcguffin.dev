@@ -4,11 +4,15 @@ import mdx from "@astrojs/mdx";
 
 import tailwindcss from "@tailwindcss/vite";
 
+const shikiConfig = {
+  themes: { light: 'vitesse-light', dark: 'vitesse-dark' },
+} as const;
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://nickmcguffin.dev",
-  integrations: [mdx()],
-
+  markdown: { shikiConfig },
+  integrations: [mdx({ shikiConfig })],
   vite: {
     plugins: [tailwindcss()]
   }

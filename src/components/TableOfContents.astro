@@ -1,0 +1,26 @@
+---
+interface Props {
+	headings: { depth: number; slug: string; text: string }[];
+}
+ 
+const { headings } = Astro.props;
+---
+ 
+<ul class="border-l border-rule">
+	{
+		headings.map((h) => (
+			<li>
+				<a
+					href={`#${h.slug}`}
+					class:list={[
+						'-ml-px block border-l border-transparent py-1.5 text-sm leading-snug text-muted hover:border-accent hover:text-fg',
+						h.depth === 3 ? 'pl-7' : 'pl-4',
+					]}
+				>
+					{h.text}
+				</a>
+			</li>
+		))
+	}
+</ul>
+ 

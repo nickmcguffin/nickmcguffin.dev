@@ -1,22 +1,27 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import PostRow from '../../components/PostRow.astro';
 
 const posts = await getCollection('blog');
 posts.sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf());
+
+const deck = 'Notes on what I build, and the parts that break.';
 ---
 
-<Base title="Blog">
-    <h1>Blog</h1>
-    <ul>
-        {posts.map((post) => (
-        <li>
-            <a href={`/blog/${post.id}`}>{post.data.title}</a>
-            <p>{post.data.description}</p>
-            <time datetime={post.data.published.toISOString()}>
-                Published on {post.data.published.toLocaleDateString('en-AU', { timeZone: 'UTC', dateStyle: 'medium' })}
-            </time>
-        </li>
-        ))}
-    </ul>
+<Base title="Blog" description={deck}>
+	<div class="border-b border-rule pb-6">
+		<h1 class="font-display text-4xl font-extrabold tracking-[-0.035em] sm:text-5xl">Blog</h1>
+		<p class="mt-3 max-w-prose leading-relaxed text-muted">{deck}</p>
+	</div>
+
+	<ul class="divide-y divide-rule">
+		{
+			posts.map((post) => (
+				<li>
+					<PostRow post={post} />
+				</li>
+			))
+		}
+	</ul>
 </Base>

@@ -1,0 +1,31 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import readingTime from 'reading-time';
+
+interface Props {
+	post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { title, description, published } = post.data;
+
+const minutes = post.body ? Math.max(1, Math.round(readingTime(post.body).minutes)) : null;
+---
+
+<a href={`/blog/${post.id}`} class="group flex flex-col gap-1 py-7 sm:flex-row sm:gap-6">
+	<div
+		class="font-mono text-[11px] uppercase tracking-[0.12em] text-muted sm:w-28 sm:shrink-0 sm:pt-1.5"
+	>
+		<time datetime={published.toISOString()}>
+			{published.toLocaleDateString('en-AU', { timeZone: 'UTC', dateStyle: 'medium' })}
+		</time>
+		{minutes && <div class="mt-1.5">{minutes} min read</div>}
+	</div>
+
+	<div>
+		<h2 class="font-display text-lg font-semibold tracking-tight group-hover:text-accent">
+			{title}
+		</h2>
+		<p class="mt-1 text-sm leading-relaxed text-muted">{description}</p>
+	</div>
+</a>
