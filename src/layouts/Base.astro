@@ -20,13 +20,10 @@ const {
 const pageTitle = title ? `${title} | Nick McGuffin` : 'Nick McGuffin - Full-Stack Engineer';
 const canonical = new URL(Astro.url.pathname, Astro.site);
 
-const links = [
-	{ href: '/blog', label: 'Blog' },
-];
+const links = [{ href: '/blog', label: 'Blog' }];
 
 const path = Astro.url.pathname;
 const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`);
-
 ---
 
 <html lang="en">
@@ -94,7 +91,11 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
 							<a
 								href={link.href}
 								aria-current={isCurrent(link.href) ? 'page' : undefined}
-								class:list={['label', 'hover:text-fg', isCurrent(link.href) ? 'text-accent' : 'text-muted']}
+								class:list={[
+									'label',
+									'hover:text-fg',
+									isCurrent(link.href) ? 'text-accent' : 'text-muted',
+								]}
 							>
 								{link.label}
 							</a>
@@ -106,7 +107,10 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
 					id="theme-toggle"
 					type="button"
 					aria-label="Toggle colour theme"
-					class:list={['label', 'rounded-full border border-rule px-3 py-1 text-muted hover:text-fg']}
+					class:list={[
+						'label',
+						'rounded-full border border-rule px-3 py-1 text-muted hover:text-fg',
+					]}
 				>
 					<span class="dark:hidden">Dark</span>
 					<span class="hidden dark:inline">Light</span>
@@ -117,9 +121,7 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
 				<slot />
 			</main>
 
-			<footer
-				class:list={['label', 'flex gap-5 border-t border-rule py-6 text-muted']}
-			>
+			<footer class:list={['label', 'flex gap-5 border-t border-rule py-6 text-muted']}>
 				<span class="mr-auto">© {new Date().getFullYear()} Nick McGuffin</span>
 				<a href="/rss.xml" class="hover:text-fg">RSS</a>
 			</footer>

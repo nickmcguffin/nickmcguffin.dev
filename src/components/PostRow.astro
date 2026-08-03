@@ -13,9 +13,7 @@ const minutes = getReadingMinutes(post);
 ---
 
 <a href={`/blog/${post.id}`} class="group flex flex-col gap-1 py-7 sm:flex-row sm:gap-6">
-	<div
-		class="label text-muted sm:w-28 sm:shrink-0 sm:pt-1.5"
-	>
+	<div class="label text-muted sm:w-28 sm:shrink-0 sm:pt-1.5">
 		<time datetime={published.toISOString()}>
 			{published.toLocaleDateString('en-AU', { timeZone: 'UTC', dateStyle: 'medium' })}
 		</time>

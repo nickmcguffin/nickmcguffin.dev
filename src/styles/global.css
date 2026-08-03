@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* Class-based dark mode. Applies when <html> has .dark */
 @custom-variant dark (&:where(.dark, .dark *));
@@ -9,21 +9,21 @@
 ---------------------------------------------------------------- */
 
 :root {
-  --bg: #f5f4f0;      /* warm paper */
-  --fg: #12100e;      /* ink */
-  --muted: #6e7370;   /* secondary text */
-  --rule: #dedcd3;    /* hairlines, borders */
-  --accent: #8a5a12;  /* brass, darkened for contrast on light */
+  --bg: #f5f4f0; /* warm paper */
+  --fg: #12100e; /* ink */
+  --muted: #6e7370; /* secondary text */
+  --rule: #dedcd3; /* hairlines, borders */
+  --accent: #8a5a12; /* brass, darkened for contrast on light */
   --code-bg: #ecebe5;
   color-scheme: light;
 }
 
 .dark {
-  --bg: #0f1413;      /* near-black, green undertone */
+  --bg: #0f1413; /* near-black, green undertone */
   --fg: #e9e7e0;
   --muted: #8a9491;
   --rule: #26302e;
-  --accent: #d4a03c;  /* brass */
+  --accent: #d4a03c; /* brass */
   --code-bg: #151b1a;
   color-scheme: dark;
 }
@@ -41,9 +41,9 @@
 /* Fonts don't change per mode, so a plain @theme block — which
    also emits them as real custom properties for the .post rules. */
 @theme {
-  --font-display: "Archivo Variable", sans-serif;
-  --font-sans: "IBM Plex Sans", sans-serif;
-  --font-mono: "IBM Plex Mono", monospace;
+  --font-display: 'Archivo Variable', sans-serif;
+  --font-sans: 'IBM Plex Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
 }
 
 /* Small mono caps — eyebrows, dates, nav, footer. Used often enough
@@ -106,11 +106,19 @@
   padding-left: 1.3rem;
 }
 
-.post ul { list-style: disc; }
-.post ol { list-style: decimal; }
+.post ul {
+  list-style: disc;
+}
+.post ol {
+  list-style: decimal;
+}
 
-.post li::marker { color: var(--muted); }
-.post li + li { margin-top: 0.5rem; }
+.post li::marker {
+  color: var(--muted);
+}
+.post li + li {
+  margin-top: 0.5rem;
+}
 
 .post blockquote {
   border-left: 2px solid var(--accent);
@@ -191,5 +199,7 @@ html.dark .post .astro-code span {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+  }
 }

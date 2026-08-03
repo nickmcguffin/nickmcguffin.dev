@@ -22,7 +22,12 @@ npm run dev        # localhost:4321
 npm run build      # → dist/
 npm run preview    # serve the built site
 npm run check      # astro check — type-checks .astro and .ts
+npm run format     # prettier --write .
 ```
+
+`src/content` is excluded from Prettier on purpose. It normalises ambiguous markdown in ways that
+change rendered output — indenting a blockquote into the list item above it, or rewriting code
+inside fenced blocks to match this config. Posts stay exactly as written.
 
 The dev server also runs detached, which is the workflow `AGENTS.md` assumes:
 
@@ -40,11 +45,11 @@ Add an `.mdx` file to `src/content/blog/`. The filename becomes the slug —
 
 ```yaml
 ---
-title: 'Post title'              # required
-description: 'One-line deck.'    # required — used on post rows, <meta>, and RSS
-published: 2026-07-31            # required — coerced to a Date
-tags: ['astro', 'css']           # optional — parsed, but not rendered anywhere yet
-draft: false                     # optional — see below
+title: 'Post title' # required
+description: 'One-line deck.' # required — used on post rows, <meta>, and RSS
+published: 2026-07-31 # required — coerced to a Date
+tags: ['astro', 'css'] # optional — parsed, but not rendered anywhere yet
+draft: false # optional — see below
 ---
 ```
 

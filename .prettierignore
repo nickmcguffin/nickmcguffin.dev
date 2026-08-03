@@ -1,0 +1,9 @@
+dist
+.astro
+node_modules
+package-lock.json
+
+# Posts are authored prose. Prettier "normalises" ambiguous markdown in ways
+# that change rendered output — it will indent a blockquote into a preceding
+# list item, and rewrite code inside fenced blocks to match this config.
+src/content
