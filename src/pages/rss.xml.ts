@@ -8,18 +8,25 @@ import sanitizeHtml from 'sanitize-html';
 import { getPosts } from '../lib/posts';
 
 /**
- * Shiki pairs every light-theme colour with a `--shiki-dark*` custom property,
- * which the site's `.dark` class activates. Nothing toggles that class inside a
- * feed reader, so those declarations can never apply — they're dead weight on
- * every token, and the W3C validator flags them as suspicious style content.
+ * Trims inline styles down to what a feed reader can actually use. Two things go:
+ *
+ * - `--shiki-dark*`, the custom properties Shiki pairs with every light-theme
+ *   colour. They only apply under the site's `.dark` class, which nothing toggles
+ *   in a reader, so they are dead weight on every token.
+ * - `overflow-x`, which readers override with their own `pre` styling anyway.
+ *
+ * Both are flagged by the W3C feed validator as suspicious style content; the
+ * token colours it accepts are kept, so code stays highlighted.
  */
-function stripShikiDarkVars(tagName: string, attribs: sanitizeHtml.Attributes) {
+const DROPPED_STYLE_PREFIXES = ['--shiki-dark', 'overflow-x'];
+
+function stripNonFeedStyles(tagName: string, attribs: sanitizeHtml.Attributes) {
 	if (!attribs.style) return { tagName, attribs };
 
 	const kept = attribs.style
 		.split(';')
 		.map((decl) => decl.trim())
-		.filter((decl) => decl && !decl.startsWith('--shiki-dark'));
+		.filter((decl) => decl && !DROPPED_STYLE_PREFIXES.some((p) => decl.startsWith(p)));
 
 	const next = { ...attribs };
 	if (kept.length) next.style = kept.join(';');
@@ -65,9 +72,9 @@ export async function GET(context: APIContext) {
 								? { ...attribs, href: new URL(attribs.href, site).href }
 								: attribs,
 						}),
-						pre: stripShikiDarkVars,
-						code: stripShikiDarkVars,
-						span: stripShikiDarkVars,
+						pre: stripNonFeedStyles,
+						code: stripNonFeedStyles,
+						span: stripNonFeedStyles,
 						img: (tagName, attribs) => ({
 							tagName,
 							attribs: attribs.src ? { ...attribs, src: new URL(attribs.src, site).href } : attribs,
