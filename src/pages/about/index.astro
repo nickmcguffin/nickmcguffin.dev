@@ -1,0 +1,97 @@
+---
+import Base from '../../layouts/Base.astro';
+import { Icon } from 'astro-icon/components';
+import PageHeader from '../../components/PageHeader.astro';
+
+const description =
+	'Full-stack engineer in North Queensland. Four years on defence communications systems, now building my own things and writing about them.';
+
+const socials = [
+	{ name: 'GitHub', icon: 'lucide:github', href: 'https://github.com/nickmcguffin' },
+	{
+		name: 'LinkedIn',
+		icon: 'lucide:linkedin',
+		href: 'https://www.linkedin.com/in/nicholas-mcguffin/',
+	},
+	{ name: 'Email', icon: 'lucide:mail', href: 'mailto:nick@nickmcguffin.dev' },
+] as const;
+---
+
+<Base title="About" description={description} narrow>
+	<section>
+		<PageHeader
+			title="About"
+			deck="I build software and write down what I learn - including the parts that go wrong."
+		/>
+
+		<div class="post mt-10">
+			<p>
+				I'm Nick - a full-stack engineer based in North Queensland. For the past four years I've
+				built web applications for defence communications systems, where a dropped message isn't an
+				inconvenience, it's a failure.
+			</p>
+
+			<p>
+				I work primarily in TypeScript and Python - React and Next.js on the front end, Django and
+				Postgres behind it. Lately I've been filling in the infrastructure side: containers, CI, and
+				the plumbing that sits under everything else.
+			</p>
+
+			<h2>What I'm building</h2>
+
+			<p>
+				Waypoint - a small SaaS platform where several apps share one account and one backend. The
+				first is Simmer, a meal planner: plan a week, get the shopping list, or let it build the
+				week for you when nobody can decide. Health and scheduling apps are next. It's equal parts
+				side business and a place to make architectural decisions I don't get to make often at work.
+			</p>
+
+			<h2>How I work</h2>
+
+			<p>
+				I want to understand how things work, all the way down. If I don't know something yet,
+				that's not a big deal - it's an opportunity. I like taking a complex problem and finding the
+				simple solution hiding inside it, and I'd rather remove a redundancy than work around it.
+			</p>
+
+			<p>
+				The other half of that is writing it down. Documenting what I learn - from the basics
+				through to the parts that took three days to work out - is most of why this site exists.
+			</p>
+
+			<h2>What I'm after</h2>
+
+			<p>
+				Work where the problems are complex and the constraints are real, alongside people who are
+				better than me at something. If you're hiring for remote full-stack work, have a contract
+				that needs someone who'll read the docs properly, or just want to talk about something I've
+				written here - my inbox is always open.
+			</p>
+
+			<h2>Outside software</h2>
+
+			<p>
+				Piano, gardening, fishing, gaming, hiking and barbecue - so expect the occasional post about
+				those, and whatever else I pick up along the way.
+			</p>
+		</div>
+
+		<div class="mt-12 border-t border-rule pt-10">
+			<h2 class="label text-center text-muted">Elsewhere</h2>
+			<div class="mt-5 flex justify-center gap-8">
+				{
+					socials.map((social) => (
+						<a
+							href={social.href}
+							aria-label={social.name}
+							rel="me"
+							class="text-muted transition-colors hover:text-accent"
+						>
+							<Icon name={social.icon} size={22} />
+						</a>
+					))
+				}
+			</div>
+		</div>
+	</section>
+</Base>

@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import PostRow from '../../components/PostRow.astro';
+import PageHeader from '../../components/PageHeader.astro';
 import { getPosts } from '../../lib/posts';
 
 const posts = await getPosts();
@@ -9,10 +10,7 @@ const deck = 'Notes on what I build, and the parts that break.';
 ---
 
 <Base title="Blog" description={deck}>
-	<div class="border-b border-rule pb-6">
-		<h1 class="font-display text-4xl font-extrabold tracking-[-0.035em] sm:text-5xl">Blog</h1>
-		<p class="mt-3 max-w-prose leading-relaxed text-muted">{deck}</p>
-	</div>
+	<PageHeader title="Blog" deck={deck} />
 
 	<ul class="divide-y divide-rule">
 		{

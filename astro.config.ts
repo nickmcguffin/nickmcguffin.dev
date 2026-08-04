@@ -1,10 +1,9 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
-
-import tailwindcss from '@tailwindcss/vite';
-
 import sitemap from '@astrojs/sitemap';
+import icon from 'astro-icon';
+import tailwindcss from '@tailwindcss/vite';
 
 const shikiConfig = {
 	themes: { light: 'vitesse-light', dark: 'vitesse-dark' },
@@ -14,7 +13,7 @@ const shikiConfig = {
 export default defineConfig({
 	site: 'https://nickmcguffin.dev',
 	markdown: { shikiConfig },
-	integrations: [mdx({ shikiConfig }), sitemap()],
+	integrations: [mdx({ shikiConfig }), sitemap(), icon()],
 	vite: {
 		plugins: [tailwindcss()],
 	},

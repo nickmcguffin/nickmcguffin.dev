@@ -37,7 +37,7 @@ function stripNonFeedStyles(tagName: string, attribs: sanitizeHtml.Attributes) {
 
 /**
  * Full post bodies in the feed. MDX compiles to a component rather than static
- * HTML, so there's nothing to read off the entry — it has to be rendered, and
+ * HTML, so there's nothing to read off the entry - it has to be rendered, and
  * the container API is the supported way to do that outside a page.
  */
 export async function GET(context: APIContext) {
@@ -64,7 +64,7 @@ export async function GET(context: APIContext) {
 						...sanitizeHtml.defaults.allowedAttributes,
 						'*': ['style', 'class'],
 					},
-					// Feed readers resolve nothing — every URL has to be absolute.
+					// Feed readers resolve nothing - every URL has to be absolute.
 					transformTags: {
 						a: (tagName, attribs) => ({
 							tagName,

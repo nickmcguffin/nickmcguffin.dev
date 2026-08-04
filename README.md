@@ -1,32 +1,32 @@
 # nickmcguffin.dev
 
-Personal site and blog — [nickmcguffin.dev](https://nickmcguffin.dev).
+Personal site and blog - [nickmcguffin.dev](https://nickmcguffin.dev).
 
 A static Astro site. No server, no database, no adapter: `astro build` emits plain HTML into
 `dist/`, and pushing to `main` publishes it to GitHub Pages.
 
 ## Stack
 
-- **Astro 7** — static output. Posts are MDX so a post can drop in a component when prose isn't enough.
-- **Tailwind v4** via the Vite plugin, configured entirely in CSS. There is no `tailwind.config.js` — see [Design system](#design-system).
+- **Astro 7** - static output. Posts are MDX so a post can drop in a component when prose isn't enough.
+- **Tailwind v4** via the Vite plugin, configured entirely in CSS. There is no `tailwind.config.js` - see [Design system](#design-system).
 - **`@astrojs/rss`** → `/rss.xml`, **`@astrojs/sitemap`** → `/sitemap-index.xml`.
 - **Shiki** for code blocks, dual-themed to follow light/dark.
 
 ## Run it
 
-Node — `.nvmrc` pins 24, matching CI; `engines` sets the floor at `>=22.12.0`. npm.
+Node - `.nvmrc` pins 24, matching CI; `engines` sets the floor at `>=22.12.0`. npm.
 
 ```sh
 npm install
 npm run dev        # localhost:4321
 npm run build      # → dist/
 npm run preview    # serve the built site
-npm run check      # astro check — type-checks .astro and .ts
+npm run check      # astro check - type-checks .astro and .ts
 npm run format     # prettier --write .
 ```
 
 `src/content` is excluded from Prettier on purpose. It normalises ambiguous markdown in ways that
-change rendered output — indenting a blockquote into the list item above it, or rewriting code
+change rendered output - indenting a blockquote into the list item above it, or rewriting code
 inside fenced blocks to match this config. Posts stay exactly as written.
 
 The dev server also runs detached, which is the workflow `AGENTS.md` assumes:
@@ -40,27 +40,27 @@ npx astro dev stop
 
 ## Writing a post
 
-Add an `.mdx` file to `src/content/blog/`. The filename becomes the slug —
+Add an `.mdx` file to `src/content/blog/`. The filename becomes the slug -
 `hello-world.mdx` → `/blog/hello-world`.
 
 ```yaml
 ---
 title: 'Post title' # required
-description: 'One-line deck.' # required — used on post rows, <meta>, and RSS
-published: 2026-07-31 # required — coerced to a Date
-tags: ['astro', 'css'] # optional — parsed, but not rendered anywhere yet
-draft: false # optional — see below
+description: 'One-line deck.' # required - used on post rows, <meta>, and RSS
+published: 2026-07-31 # required - coerced to a Date
+tags: ['astro', 'css'] # optional - parsed, but not rendered anywhere yet
+draft: false # optional - see below
 ---
 ```
 
 Schema lives in `src/content.config.mjs`. Two things to know:
 
-- **The loader globs `.mdx` only.** A `.md` file is ignored silently — no error, it just never
+- **The loader globs `.mdx` only.** A `.md` file is ignored silently - no error, it just never
   appears.
 - **`draft: true` hides a post from builds but keeps it in `dev`,** so you can preview work in
   progress at its real URL. In a production build it gets no page, and it's absent from the blog
   index, the homepage, RSS, and the sitemap. That filter lives in `getPosts()` in
-  `src/lib/posts.ts` — use it rather than calling `getCollection('blog')` directly, or drafts will
+  `src/lib/posts.ts` - use it rather than calling `getCollection('blog')` directly, or drafts will
   leak.
 
 `##` and `###` headings populate the table of contents. Deeper levels are ignored.
@@ -69,12 +69,12 @@ Schema lives in `src/content.config.mjs`. Two things to know:
 
 Almost none of this is discoverable from the file tree, so:
 
-**Colour** — two palettes as CSS custom properties on `:root` and `.dark` in
+**Colour** - two palettes as CSS custom properties on `:root` and `.dark` in
 `src/styles/global.css`, named by role rather than by colour so class names read correctly in both
 modes: `--bg`, `--fg`, `--muted`, `--rule`, `--accent`, `--code-bg`.
 
 They reach Tailwind through `@theme inline { --color-bg: var(--bg); … }`, which yields `bg-bg`,
-`text-fg`, `text-muted`, `border-rule`, `text-accent`. **The `inline` keyword is load-bearing** —
+`text-fg`, `text-muted`, `border-rule`, `text-accent`. **The `inline` keyword is load-bearing** -
 without it Tailwind resolves each var to a literal at build time and the runtime theme toggle stops
 working. `--code-bg` is deliberately not in that block; it's only consumed by the `.post` rules, so
 there's no `bg-code-bg` utility.
@@ -88,20 +88,20 @@ files; if you need another recurring cluster like it, add a utility rather than 
 applies it before first paint, falling back to `prefers-color-scheme`. It has to stay inline and
 unbundled, or the page flashes the wrong theme on load.
 
-**Type** — Archivo Variable (display), IBM Plex Sans (body), IBM Plex Mono (labels, dates, code).
+**Type** - Archivo Variable (display), IBM Plex Sans (body), IBM Plex Mono (labels, dates, code).
 Self-hosted through Fontsource; declared in a plain `@theme` block so they also emit as real custom
 properties the `.post` rules can use.
 
-**Post body** — Preflight strips every element default, so rendered MDX is styled explicitly, tag
+**Post body** - Preflight strips every element default, so rendered MDX is styled explicitly, tag
 by tag, under `.post` in `global.css`. A new element in a post needs a rule there or it renders
 bare.
 
-**Code blocks** — Shiki, `vitesse-light` / `vitesse-dark`. The config in `astro.config.ts` is
+**Code blocks** - Shiki, `vitesse-light` / `vitesse-dark`. The config in `astro.config.ts` is
 passed to **both** `markdown` and `mdx()`; MDX doesn't inherit the top-level markdown config, and
 dropping either one silently half-breaks highlighting. `.post .astro-code` overrides the background
 to `--code-bg`, and the dark variant swaps token colours via `--shiki-dark`.
 
-**Motion** — the animated `RouteGraphic` is wrapped in `prefers-reduced-motion: no-preference`, so
+**Motion** - the animated `RouteGraphic` is wrapped in `prefers-reduced-motion: no-preference`, so
 its resting state is the finished graphic.
 
 ## Structure
@@ -109,11 +109,11 @@ its resting state is the finished graphic.
 ```
 src/
 ├── pages/
-│   ├── index.astro          # homepage — hero + 3 most recent posts
+│   ├── index.astro          # homepage - hero + 3 most recent posts
 │   ├── rss.xml.ts           # /rss.xml
 │   └── blog/
 │       ├── index.astro      # post index
-│       └── [...slug].astro  # post page — TOC, reading time
+│       └── [...slug].astro  # post page - TOC, reading time
 ├── layouts/
 │   └── Base.astro           # <head>, SEO meta, theme toggle, header, footer
 ├── components/
@@ -141,9 +141,9 @@ a `CNAME` file in `public/`. Worth knowing before wondering why the domain isn't
 The feed at `/rss.xml` carries **full post bodies**, not just descriptions. MDX compiles to a
 component rather than static HTML, so `rss.xml.ts` renders each post through Astro's container API
 and passes the result through `sanitize-html`, which also rewrites relative links and images to
-absolute URLs — feed readers resolve nothing themselves.
+absolute URLs - feed readers resolve nothing themselves.
 
-`site` in `astro.config.ts` is the root of all absolute URLs — canonical tags, the sitemap, and RSS
+`site` in `astro.config.ts` is the root of all absolute URLs - canonical tags, the sitemap, and RSS
 links all derive from it, so changing the domain is a one-line change. `public/robots.txt` points
 crawlers at `/sitemap-index.xml`. Per-page titles, descriptions, and Open Graph tags come from
 `Base.astro` props; passing `published` flips `og:type` to `article` and adds

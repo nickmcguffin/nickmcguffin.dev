@@ -28,7 +28,7 @@
   color-scheme: dark;
 }
 
-/* Colours need the var indirection so the toggle works —
+/* Colours need the var indirection so the toggle works -
    `inline` stops Tailwind baking one value in at build time. */
 @theme inline {
   --color-bg: var(--bg);
@@ -38,7 +38,7 @@
   --color-accent: var(--accent);
 }
 
-/* Fonts don't change per mode, so a plain @theme block — which
+/* Fonts don't change per mode, so a plain @theme block - which
    also emits them as real custom properties for the .post rules. */
 @theme {
   --font-display: 'Archivo Variable', sans-serif;
@@ -46,7 +46,7 @@
   --font-mono: 'IBM Plex Mono', monospace;
 }
 
-/* Small mono caps — eyebrows, dates, nav, footer. Used often enough
+/* Small mono caps - eyebrows, dates, nav, footer. Used often enough
    that it's a utility rather than a repeated class string. */
 @utility label {
   font-family: var(--font-mono);
@@ -132,7 +132,7 @@
   margin-top: 2.75rem;
 }
 
-/* Inline code only — the :not(pre) guard keeps this off code blocks */
+/* Inline code only - the :not(pre) guard keeps this off code blocks */
 .post :not(pre) > code {
   font-family: var(--font-mono);
   font-size: 0.85em;
