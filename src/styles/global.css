@@ -203,3 +203,27 @@ html.dark .post .astro-code span {
     scroll-behavior: smooth;
   }
 }
+
+/* hide print-specific elements */
+@media print {
+  header,
+  footer,
+  #theme-toggle,
+  .no-print {
+    display: none;
+  }
+  main {
+    padding: 0;
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  :root {
+    --bg: #fff;
+    --fg: #000;
+    --muted: #444;
+    --rule: #ccc;
+    --accent: #000;
+  }
+}

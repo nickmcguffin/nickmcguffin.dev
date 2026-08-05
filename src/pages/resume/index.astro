@@ -1,0 +1,143 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import { Icon } from 'astro-icon/components';
+
+const description =
+	'Full-stack engineer with four years shipping production web software in TypeScript, React and Python.';
+
+const roles = [
+	{
+		title: 'Software Engineer',
+		org: 'Boeing Defence Australia, Brisbane',
+		period: 'Jun 2022 - Aug 2026',
+		points: [
+			'Designed and built a responsive React and TypeScript single-page application delivering real-time monitoring, control and data visualisation for complex networking systems.',
+			'Designed and developed Python backend services interfacing with hardware and software over serial, REST and WebSocket connections, streaming live data to the front end through a shared datastore.',
+			'Helped drive the re-architecture of a single-product system into a modular, plugin-based platform now supporting four products on shared infrastructure, with capacity to onboard more.',
+			'Built internal tooling for network modelling, visualisation and analysis, including interactive diagrams, shortest-path analysis and mock environments, reducing reliance on physical hardware and accelerating feature development.',
+			'Delivered features end to end, working with systems, firmware, hardware and networking teams to translate product requirements into reliable solutions under real-world constraints.',
+			'Mentored one to two junior engineers, graduates and interns each cycle over two years, supporting onboarding and remaining an ongoing technical point of contact.',
+			'Maintained delivery quality through unit, integration and DOM testing, CI/CD pipelines and daily code reviews in a high-compliance, security-critical environment.',
+		],
+	},
+	{
+		title: 'Peer Assisted Study Sessions Leader',
+		org: 'Central Queensland University, Brisbane',
+		period: 'Feb 2021 - Oct 2022',
+		points: [
+			'Facilitated weekly programming and systems-analysis study sessions for first-year students.',
+			'Taught foundational programming and problem-solving concepts in an inclusive, discussion-driven format.',
+		],
+	},
+];
+
+const skills = [
+	{ group: 'Languages', items: 'TypeScript, JavaScript, Python, SQL, Java (academic)' },
+	{
+		group: 'Front end',
+		items:
+			'React, HTML, CSS/SCSS, Single-Page Applications, State Management, Material UI, Knockout.js',
+	},
+	{ group: 'Back end', items: 'Python, Node.js, REST, WebSockets, Spring (academic)' },
+	{ group: 'Testing', items: 'Jest, React Testing Library, Karma, DOM testing, Pytest, unittest' },
+	{
+		group: 'Tooling',
+		items: 'Git, CI/CD (Jenkins), SonarQube, Linux (Fedora), Jira, Confluence, Bitbucket',
+	},
+];
+
+const education = [
+	{
+		title: 'Bachelor of Information Technology (Application Development)',
+		org: 'Central Queensland University, Brisbane',
+		period: 'Completed Oct 2022',
+	},
+];
+
+const label = 'font-mono text-[11px] uppercase tracking-[0.12em]';
+const section = 'mt-6 divide-y divide-rule border-t border-rule';
+const meta = `${label} text-muted sm:w-32 sm:shrink-0`;
+---
+
+<Base title="Résumé" description={description}>
+	<PageHeader title="Résumé" deck={description}>
+		<a
+			slot="action"
+			href="/nick-mcguffin-resume.pdf"
+			download
+			class:list={[
+				label,
+				'no-print flex items-center gap-2 rounded-full border border-rule px-4 py-2 text-muted hover:border-accent hover:text-fg',
+			]}
+		>
+			<Icon name="lucide:download" size={14} />
+			PDF
+		</a>
+	</PageHeader>
+
+	<section class="mt-12">
+		<p class:list={[label, 'text-muted']}>Experience</p>
+
+		<div class={section}>
+			{
+				roles.map((role) => (
+					<div class="flex flex-col gap-2 py-7 sm:flex-row sm:gap-8">
+						<p class:list={[meta, 'sm:pt-1.5']}>{role.period}</p>
+
+						<div>
+							<h2 class="font-display text-lg font-semibold tracking-tight">{role.title}</h2>
+							<p class="mt-0.5 text-sm text-muted">{role.org}</p>
+
+							<ul class="mt-4 list-disc space-y-2.5 pl-5 text-sm leading-relaxed marker:text-accent">
+								{role.points.map((point) => (
+									<li>{point}</li>
+								))}
+							</ul>
+						</div>
+					</div>
+				))
+			}
+		</div>
+	</section>
+
+	<section class="mt-14">
+		<p class:list={[label, 'text-muted']}>Skills</p>
+
+		<div class={section}>
+			{
+				skills.map((skill) => (
+					<div class="flex flex-col gap-1 py-5 sm:flex-row sm:gap-8">
+						<p class:list={[meta, 'sm:pt-0.5']}>{skill.group}</p>
+						<p class="text-sm leading-relaxed">{skill.items}</p>
+					</div>
+				))
+			}
+		</div>
+	</section>
+
+	<section class="mt-14">
+		<p class:list={[label, 'text-muted']}>Education</p>
+
+		<div class={section}>
+			{
+				education.map((item) => (
+					<div class="flex flex-col gap-1 py-5 sm:flex-row sm:gap-8">
+						<p class:list={[meta, 'sm:pt-1']}>{item.period}</p>
+						<div>
+							<h2 class="font-display text-base font-semibold tracking-tight">{item.title}</h2>
+							<p class="mt-0.5 text-sm text-muted">{item.org}</p>
+						</div>
+					</div>
+				))
+			}
+		</div>
+	</section>
+
+	<p class="mt-14 text-sm leading-relaxed text-muted">
+		Full history, references and a PDF copy on request - &nbsp;
+		<a href="mailto:nick@nickmcguffin.dev" class="text-accent underline underline-offset-4"
+			>nick@nickmcguffin.dev</a
+		>.
+	</p>
+</Base>
