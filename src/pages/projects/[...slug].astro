@@ -1,0 +1,60 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Icon } from 'astro-icon/components';
+import Base from '../../layouts/Base.astro';
+
+export async function getStaticPaths() {
+	const projects = await getCollection('projects');
+	return projects.map((project) => ({
+		params: { slug: project.id },
+		props: { project },
+	}));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const { title, description, stack, started, url, repo } = project.data;
+
+type Link = { href: string; icon: string; text: string };
+
+const links: Link[] = [];
+if (url) links.push({ href: url, icon: 'lucide:external-link', text: 'Live site' });
+if (repo) links.push({ href: repo, icon: 'lucide:github', text: 'Source' });
+---
+
+<Base title={title} description={description} narrow>
+	<article>
+		<a href="/projects" class:list={['label', 'text-muted hover:text-fg']}>&larr; All projects</a>
+
+		<h1
+			class="mt-7 font-display text-3xl font-extrabold leading-[1.05] tracking-[-0.03em] sm:text-4xl"
+		>
+			{title}
+		</h1>
+
+		<p class="mt-4 leading-relaxed text-muted">{description}</p>
+
+		<p class:list={['label', 'mt-6 text-muted']}>Started {started.getFullYear()}</p>
+
+		<ul class:list={['label', 'mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-fg']}>
+			{stack.map((tech) => <li>{tech}</li>)}
+		</ul>
+
+		{
+			links.length > 0 && (
+				<div class="mt-7 flex flex-wrap gap-3">
+					{links.map((link) => (
+						<a href={link.href} class:list={['label', 'button', 'px-3 py-1']}>
+							<Icon name={link.icon} size={14} />
+							{link.text}
+						</a>
+					))}
+				</div>
+			)
+		}
+
+		<div class="post mt-10 border-t border-rule pt-10">
+			<Content />
+		</div>
+	</article>
+</Base>

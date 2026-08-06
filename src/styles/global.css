@@ -11,7 +11,7 @@
 :root {
   --bg: #f5f4f0; /* warm paper */
   --fg: #12100e; /* ink */
-  --muted: #6e7370; /* secondary text */
+  --muted: #5c625f; /* secondary text */
   --rule: #dedcd3; /* hairlines, borders */
   --accent: #8a5a12; /* brass, darkened for contrast on light */
   --code-bg: #ecebe5;
@@ -55,6 +55,25 @@
   letter-spacing: 0.12em;
 }
 
+/* Pill button - theme toggle, PDF download, project links.
+   Padding stays on the element so sizes can differ. */
+@utility button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  border: 1px solid var(--rule);
+  border-radius: 9999px;
+  color: var(--muted);
+  transition:
+    color 150ms,
+    border-color 150ms;
+
+  &:hover {
+    color: var(--fg);
+    border-color: var(--accent);
+  }
+}
 /* ---- Post body ------------------------------------------------
    Styles rendered MDX. Preflight strips every default, so each
    element needs an explicit rule.
@@ -219,7 +238,8 @@ html.dark .post .astro-code span {
     text-decoration: none;
     color: inherit;
   }
-  :root {
+  :root,
+  .dark {
     --bg: #fff;
     --fg: #000;
     --muted: #444;

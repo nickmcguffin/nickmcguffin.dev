@@ -1,0 +1,53 @@
+---
+title: nickmcguffin.dev
+description: This site. A statically generated blog and portfolio built from scratch, with a design system, dark mode and a deploy pipeline, all documented as it was built.
+stack: ['Astro', 'TypeScript', 'Tailwind', 'MDX', 'GitHub Actions', 'Cloudflare']
+started: 2026-07-01
+url: 'https://nickmcguffin.dev'
+repo: 'https://github.com/nickmcguffin/nickmcguffin.dev'
+---
+
+## The problem
+
+I kept learning things while building software and wanted somewhere to write them
+down, for myself as much as anyone else. I could have used a template and been
+publishing sooner, but that would have taught me nothing. Every part of this site
+was built from scratch and documented as I built it.
+
+## Key decisions
+
+**Astro over a React framework.** The site is almost entirely static content. Astro
+ships zero JavaScript by default and adds it only where something is genuinely
+interactive, which here is the theme toggle and a collapsible contents list. Nothing
+else needed to run in the browser.
+
+**A design system rather than a component library.** Colours, type scale and spacing
+are defined once as CSS custom properties and consumed through Tailwind's theme.
+Light and dark are two sets of the same variables, so no component carries a `dark:`
+variant. Changing the palette is one file.
+
+**Typography written by hand instead of a plugin.** Rendered MDX gets its styling
+from explicit rules rather than a prose plugin, so the result matches the rest of the
+site exactly instead of being overridden back toward it.
+
+## What I would do differently
+
+I built the site prior to having any blog content. So I used generated `.mdx`
+content files, which needed a bit of fine tuning once real content was added. If I
+had pre-written content, I could have spent a bit more time on design decisions to
+build a better end-product from the start. 
+
+Further to this, I kept adding features to the website - new pages, improved designs,
+reading time analysis, table of contents, full-content RSS, a sitemap - before adding
+any blog content, even though the posts had been drafted as I was going. 
+
+
+## What's next
+
+* Adding Giscus comments to blog posts.
+* Adding OpenGraph images to shared links.
+* Implementing pagination and tags as more blog posts are added.
+* Introducing search and filtering functionality on blog posts using React Islands.
+* A Sanity (headless CMS) migration to store and manage digital content.
+* Converting the end result to a forkable template for others to use.
+* Writing blog content!

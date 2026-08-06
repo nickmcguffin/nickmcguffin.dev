@@ -1,0 +1,59 @@
+---
+title: Simmer
+description: A meal planner and the first app built on Waypoint, a small multi-app platform of my own. Plan a week, get the shopping list, or let it build the week when nobody can decide.
+stack: ['Next.js', 'React', 'TypeScript', 'Turborepo', 'Tailwind', 'Supabase']
+started: 2026-04-01
+---
+
+Source is private while this is a commercial project. What follows is how it was built
+and why.
+
+## The problem
+
+A common theme was occurring indefinitely in my household - deciding what to eat each
+week, catering to allergies, the culinary whims of a young child, and competing
+tastebuds - and it seemed like a good problem to automate. Most meal planners either
+want you to adopt their recipe library wholesale or give you an empty calendar and
+minimal help. Simmer sits between: your own recipes, your own week, with the option to
+have it filled in for you with your favourite recipes or something new to try.
+
+## Key decisions
+
+**A schema per app, not `public`.** Simmer is the first app on Waypoint, a small
+platform underneath it where several products share one account and one backend.
+Identity and billing live in a shared `waypoint` schema; each app owns its own. Apps
+stay isolated enough that a migration in one cannot break another, while joins to
+shared data stay cheap. The alternative, a database per app, would have meant
+duplicating identity everywhere.
+
+**Reading claims locally instead of asking the auth server.** The obvious Supabase
+call for the current user makes a network round trip on every invocation. Reading the
+claims out of the JWT does not. For an app that checks auth on most server-rendered
+requests, that is the same information for a fraction of the latency, and it is the
+kind of thing you only find by reading past the first example in the documentation.
+
+**Passkeys instead of social login.** I started with Google OAuth and abandoned it 
+after fighting cookie and session behaviour in local development for more time than
+it was worth. I then opted for passkeys as an alternative, faster auth implementation
+to get the app off the ground. They were a simpler starting point, and kept one less
+third party in the login path. 
+
+**Cross-browser testing in CI, one browser locally.** WebKit will not run on Fedora, so
+local Playwright runs are Chromium only and full coverage happens in the pipeline.
+I would've preferred to be able to run everything locally, but given the constraints
+I had to pivot and this ensures the local testing stays fast.
+
+## What I would do differently
+
+I built more platform than I needed before the product had proven anything. Shared
+auth, schema separation and a subscription model all existed while Simmer itself was
+still only the single application on the platform. Building the platform ahead of the
+first product is a well-documented trap and I walked into it knowingly, on the
+assumption that the second app was close behind. It was not.
+
+## What's next
+
+A rebuild in C# and .NET with a React front end, deployed in containers on the cloud. 
+Partly because the domain suits it, partly because it is the stack I want to be strong
+in and partly because I want to build my skills in modern tech while building everything
+from end-to-end.

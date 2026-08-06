@@ -1,0 +1,25 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import ProjectRow from '../../components/ProjectRow.astro';
+
+const projects = await getCollection('projects');
+projects.sort((a, b) => b.data.started.valueOf() - a.data.started.valueOf());
+
+const deck = 'Things I have built, and what I learned building them.';
+---
+
+<Base title="Projects" description={deck}>
+	<PageHeader title="Projects" deck={deck} />
+
+	<ul class="divide-y divide-rule">
+		{
+			projects.map((project) => (
+				<li>
+					<ProjectRow project={project} />
+				</li>
+			))
+		}
+	</ul>
+</Base>
