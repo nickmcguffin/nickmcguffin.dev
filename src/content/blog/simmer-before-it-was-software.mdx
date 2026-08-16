@@ -1,0 +1,76 @@
+---
+title: "Simmer, Before it was Software"
+description: "Before Simmer was an app, it was a Claude project and a folder of Google Docs. What the workflow fixed and where it didn't hit the mark."
+published: 2026-08-16
+tags: ["nextjs", "react", "typescript", "supabase"]
+draft: false
+---
+
+## The Problem
+
+I have a meal planning app called Simmer. The idea came together after ongoing frustrations with my family. Each week, I would do the shopping for a family of three – catering to allergies, food aversions, the whims of a 4-year-old who turned his nose up at anything that looked slightly like a vegetable – and every week I came to the same dull realisation. I was bored with the monotony of cooking the same tried and tested meals week in, week out. The next logical jump in any software engineer's mind is easy to guess: "How do I make this better?"
+
+For the next two or three months, I played around with a few ideas:
+- Scouring recipe sites, saving those that looked like a good fit for the family.
+- Making new meals up on the spot, trying new ingredients with different flavours and textures (fun, but slightly concerning for the people eating my food sometimes).
+- Making a meal plan for the next week using a combination of the results of the above two steps.
+
+Ultimately, this was slow and tedious, and I was spending several hours a week on the process. From talking to friends, family and colleagues, this seems to be a common problem that everyone faces pretty routinely. We all tend to go through ebbs and flows of healthy eating, excessive takeout weeks and far too many "easy" nights to get away from cooking every day. I generally like cooking, but I wanted to make the weekly planning side of things more efficient so I wasn't wasting time on tedious tasks.
+
+## The Workflow
+
+I pivoted slightly. What if I could use Claude to offer up suggestions for meals week to week? Could I then build a library of saved recipes and once I reached a satisfactory amount (I picked forty recipes), generate meal plans on the fly and request or make changes where needed? It turns out I could.
+
+### What the Workflow Looked Like
+
+The new workflow I landed on:
+- Create a project in Claude, **Family Recipe Library**.
+- Store allergy information, preferences, family goals and specific rules for the meals (under 30 minutes of prep and cook time on weeknights, Monday is leftover night, takeout on Fridays etc.).
+- Request a first iteration of meal plan options for the week.
+- Review the meals, save the ones we would like and re-generate the ones we wouldn't.
+- Use Claude to generate a Recipe Card for each of the meals along with a full shopping list for the week.
+- Save both of the generated artefacts into a Google Drive folder that I shared with my partner.
+
+After two months of following this workflow and reaching my self-imposed critical mass of recipes (forty), I was able to use the tried and tested recipes and occasionally generate a few more to add to the library. Generally, I would pick one of the eight weeks I had already used and the shopping list was ready to go along with all the recipes. Sometimes, I would mix and match across the weeks and request a new shopping list, but the general structure of my planning would be the same. Honestly, it felt pretty good: a lot less thinking, a lot less time spent and plenty of room to add custom meals when I wanted to.
+
+## Room for Improvement
+
+The workflow was doing its job, but the cracks in the process started to appear once I was using the library instead of building it.
+
+The library wasn't really a library. It was forty recipes spread across a chat history and a folder of Google Docs. If I wanted to find every meal with under 30 minutes of cook and prep time that used the mince already in the freezer, I had to read the whole library. No tags, no filtering and no search worth its salt. The one thing a collection of recipes should do is answer the questions I had, and mine couldn't yet answer many of them.
+
+The effort of mixing and matching entries from different weeks cost more than it should have. Reusing a whole week was easy, because the entire plan and shopping list already existed. But the moment I pulled Tuesday out of week three and dropped it into week six, the shopping list was wrong and I had to jump into the middle of the workflow to get a new one. The effort scaled with how much I customised, which is backwards, considering the customisation was the part I actually wanted to do.
+
+The shopping list was a document, not a tool. It came out grouped by product category, which was nice. It worked well for an online order, but ticking off a shopping list in a Google Doc at the shops was its own special kind of misery.
+
+No part of the workflow kept track of what we cooked, what was eaten, what recipes were trialled and became a hard no. There was no way to make selections based on what was currently in the pantry, fridge or freezer. Every week started from a blank slate, so the library never got "smarter"; it just got bigger. The bigger the library grew, the harder it was to work with.
+
+The docs were an output of a process that my partner couldn't actually take part in. She could see the artefacts, but couldn't plan anything herself.
+
+The whole thing was held together by my comfort in prompting and what was essentially my new hobby of babysitting the process. To me, that wasn't a product. It was a hobby with extra steps.
+
+As these problems piled up, I realised the model was doing the easy part. Generating a meal plan wasn't the hard part. The hard part was everything else built around it: structure, state and an easy way to interact with the results without needing a lot of patience and time.
+
+So I built Simmer v1.
+
+## Simmer v1
+
+Each complaint mapped cleanly onto a decision.
+
+| **Complaint**                                                                                        | **Decision**                                                                                            |
+| ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| The library was unable to answer the questions I had about the content.                              | Filtering needed a data model: recipes became records with times, tags and ingredients instead of text. |
+| Mixing and matching weekly meals was tedious as the artefacts didn't line up once changes were made. | Shopping lists were created on demand once a weekly plan was completed.                                 |
+| My partner was unable to interact with the workflow.                                                 | Each user could create an account and connect to a household (if required).                             |
+| The workflow couldn't keep track of what meals we enjoyed, hated or didn't even try.                 | The library data model included a rating system based on family response to the meals.                  |
+| The shopping list was hard to use in the shop.                                                       | Shopping lists were interactive and usable in a mobile, offline-first setting.                          |
+
+Not all of these decisions made it into v1. Which ones did, and which ones I got wrong, is a post of its own.
+
+In the workflow, the model was the interface. In v1, generation became one feature inside an app that worked without it.
+
+The initial scope I shipped was small: a CRUD app that stored my library, generated a weekly shopping list and produced new recipes on demand.
+
+The stack I chose was Next.js, React, TypeScript and Supabase, with the actual building happening in the evenings and on weekends. The choices I made and the consequences that followed will be covered in an upcoming post.
+
+I shipped it. We used it for months, and eventually I pulled it apart.
